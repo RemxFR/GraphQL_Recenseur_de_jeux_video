@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EditorRepo extends JpaRepository<Editor, Integer> {
+
     @Query("SELECT e.id, e.nom FROM t_editor e JOIN t_game g WHERE g.id = ?1")
-    List<Editor> findAllEditorsByGameId(Integer id);
+    List<Editor> findAllByGames(Integer id);
 }

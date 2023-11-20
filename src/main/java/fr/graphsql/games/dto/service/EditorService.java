@@ -2,11 +2,11 @@ package fr.graphsql.games.dto.service;
 
 import fr.graphsql.games.dto.repositories.EditorRepo;
 import fr.graphsql.games.entity.Editor;
-import fr.graphsql.games.entity.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EditorService {
@@ -18,8 +18,13 @@ public class EditorService {
         this.editorRepo = editorRepo;
     }
 
-    public List<Editor> findByGame(Game game) {
-        List<Editor> editors = this.editorRepo.findAllEditorsByGameId(game.getId());
+    public List<Editor> findByGame(Integer gameId) {
+        List<Editor> editors = this.editorRepo.findAllByGames(gameId);
         return editors.isEmpty() ? null : editors;
+    }
+
+    public Editor findById(Integer editorId) {
+        Optional<Editor> optionalEditor = this.editorRepo.findById(editorId);
+        return optionalEditor.orElse(null);
     }
 }

@@ -13,30 +13,30 @@ type Query {
 }
 
 type Game {
-id: ID
-name: String!
-genres: [String!]!
-publicationDate: Int
-editors: [Editor!]!
-studios: [Studio!]!
-platform: [String!]!
+    id: ID
+    name: String!
+    genres: [String!]!
+    platforms: [String!]!
+    publicationDate: Float
+    editors: [Editor!]!
+    studios: [Studio!]!
 }
 
 type Studio {
-id: ID
-name: String!
-games: [Game]
+    id: ID
+    name: String!
+    games: [Game]
 }
 
 type Editor {
-id: ID
-name: String!
-games: [Game]
+    id: ID
+    name: String!
+    games: [Game]
 }
 
 type Games {
-infos: Infos
-results: [Game]
+    infos: Infos
+    results: [Game]
 }
 
 type Studios {

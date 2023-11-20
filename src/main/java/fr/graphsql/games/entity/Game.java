@@ -1,7 +1,10 @@
 package fr.graphsql.games.entity;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -16,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +30,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Game {
+@Builder
+public class Game implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -40,9 +45,11 @@ public class Game {
     private List<String> genres;
 
     @Column(name = "date_de_publication")
-    private int publicationDate;
+    private long publicationDate;
 
-    @ManyToMany
+    private Date dateTypePublicationDate;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "t_editor_games",
         joinColumns = @JoinColumn(referencedColumnName = "id"),
@@ -50,7 +57,7 @@ public class Game {
     )
     private List<Editor> editors;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "t_studio_games",
         joinColumns = @JoinColumn(referencedColumnName = "id"),

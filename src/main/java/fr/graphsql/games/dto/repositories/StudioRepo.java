@@ -11,5 +11,5 @@ import java.util.List;
 public interface StudioRepo extends JpaRepository<Studio, Integer> {
 
     @Query("SELECT s.id, s.nom FROM t_studio s JOIN t_game g WHERE g.id = ?1")
-    List<Studio> findAllByGameId(Integer id);
+    List<Studio> findAllByGames(Integer id);
 }

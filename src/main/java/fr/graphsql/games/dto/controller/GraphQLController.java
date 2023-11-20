@@ -28,19 +28,49 @@ public class GraphQLController {
         this.editorService = editorService;
     }
 
+    //Trouver un jeu par id
     @QueryMapping
-    public Game gameById(@Argument String id) {
-        return this.gameService.findById(Integer.getInteger(id));
+    public Game game(@Argument String id) {
+        return this.gameService.findById(Integer.parseInt(id));
     }
 
-    @SchemaMapping(typeName = "Game", field = "studios")
+    @SchemaMapping
     public List<Studio> studioList(Game game) {
-        return this.studioService.findByGame(game);
+        return this.studioService.findByGame(game.getId());
+
     }
 
-    @SchemaMapping(typeName = "Game", field = "editors")
+    @SchemaMapping
     public List<Editor> editorList(Game game) {
-        return this.editorService.findByGame(game);
+        return this.editorService.findByGame(game.getId());
+    }
+
+    //Trouver une liste de jeux
+    @QueryMapping
+    public List<Game> games() {
+        return this.gameService.findAll();
+    }
+
+    //Trouver un studio par id
+    @QueryMapping
+    public Studio studio(@Argument String id) {
+        return this.studioService.findById(Integer.parseInt(id));
+    }
+
+    @SchemaMapping
+    public List<Game> studioGamesList(Studio studio) {
+        return this.gameService.findByStudio(studio.getId());
+    }
+
+    //Trouver un éditeur par id
+    @QueryMapping
+    public Editor editor(@Argument String id) {
+        return this.editorService.findById(Integer.parseInt(id));
+    }
+
+    @SchemaMapping
+    public List<Game> editorGamesList(Editor editor) {
+        return this.gameService.findByEditor(editor.getId());
     }
 
 }
