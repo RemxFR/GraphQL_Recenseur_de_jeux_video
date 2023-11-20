@@ -1,0 +1,57 @@
+type Query {
+    games (
+        pages: Int
+        genre: String
+        platform: String
+        studio: String
+    ): Games
+    game(id: ID!): Game
+    editors(page: Int): Editors
+    editor(id: ID!): Editor
+    studios(page: Int): Studios
+    studio(id: ID!): Studio
+}
+
+type Game {
+id: ID
+name: String!
+genres: [String!]!
+publicationDate: Int
+editors: [Editor!]!
+studios: [Studio!]!
+platform: [String!]!
+}
+
+type Studio {
+id: ID
+name: String!
+games: [Game]
+}
+
+type Editor {
+id: ID
+name: String!
+games: [Game]
+}
+
+type Games {
+infos: Infos
+results: [Game]
+}
+
+type Studios {
+    infos: Infos
+    results: [Studio]
+}
+
+type Editors {
+    infos: Infos
+    results: [Editor]
+}
+
+type Infos {
+    count: Int!
+    pages: Int!
+    nextPage: Int
+    previousPage: Int
+}
