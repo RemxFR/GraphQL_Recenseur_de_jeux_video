@@ -1,10 +1,5 @@
 type Query {
-    games (
-        pages: Int
-        genre: String
-        platform: String
-        studio: String
-    ): Games
+    games (pages: Int, genre: String, platform: String, studio: String): Games
     game(id: ID!): Game
     editors(page: Int): Editors
     editor(id: ID!): Editor

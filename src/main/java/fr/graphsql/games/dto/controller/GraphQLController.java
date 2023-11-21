@@ -4,8 +4,11 @@ import fr.graphsql.games.dto.service.EditorService;
 import fr.graphsql.games.dto.service.GameService;
 import fr.graphsql.games.dto.service.StudioService;
 import fr.graphsql.games.entity.Editor;
+import fr.graphsql.games.entity.Editors;
 import fr.graphsql.games.entity.Game;
+import fr.graphsql.games.entity.Games;
 import fr.graphsql.games.entity.Studio;
+import fr.graphsql.games.entity.Studios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -37,7 +40,6 @@ public class GraphQLController {
     @SchemaMapping
     public List<Studio> studioList(Game game) {
         return this.studioService.findByGame(game.getId());
-
     }
 
     @SchemaMapping
@@ -47,8 +49,12 @@ public class GraphQLController {
 
     //Trouver une liste de jeux
     @QueryMapping
-    public List<Game> games() {
-        return this.gameService.findAll();
+    public Games games(
+            @Argument Integer pages,
+            @Argument String genre,
+            @Argument String platform,
+            @Argument String studio) {
+        return this.gameService.findAllByArguments(pages, genre, platform, studio);
     }
 
     //Trouver un studio par id
@@ -62,6 +68,12 @@ public class GraphQLController {
         return this.gameService.findByStudio(studio.getId());
     }
 
+    //Trouver liste des studios
+    @QueryMapping
+    public Studios studios(@Argument Integer nbrPage) {
+        return this.studioService.findAll(nbrPage);
+    }
+
     //Trouver un éditeur par id
     @QueryMapping
     public Editor editor(@Argument String id) {
@@ -71,6 +83,12 @@ public class GraphQLController {
     @SchemaMapping
     public List<Game> editorGamesList(Editor editor) {
         return this.gameService.findByEditor(editor.getId());
+    }
+
+    //Trouver tous les éditeurs
+    @QueryMapping
+    public Editors editors(@Argument Integer nbrPage) {
+        return this.editorService.findAll(nbrPage);
     }
 
 }
